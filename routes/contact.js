@@ -17,8 +17,8 @@ router.post('/send', function(req, res, next) {
   });
 
   var mailOptions = {
-    from: 'John Doe <johndoe@example.com>',
-    to: 'something@gmail.com',
+    from: 'Charley Sheets <no-reply@rcsheets.com>',
+    to: 'rcsheets@acm.org',
     subject: 'Website Submission',
     text: 'You have a new submission with the following details...' +
           'Name: ' + req.body.name +
