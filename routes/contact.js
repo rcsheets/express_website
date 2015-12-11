@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -8,17 +9,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/send', function(req, res, next) {
-  var transporter = nodemailer.createTransport({
-    service: 'Gmail',
+  var transporter = nodemailer.createTransport(smtpTransport({
+    host: 'smtp.mailgun.org',
+    port: 587,
     auth: {
-      user: 'something@gmail.com',
-      pass: 'something'
+      user: process.env.MAILGUN_USER,
+      pass: process.env.MAILGUN_PASS
     },
-  });
+  }));
 
   var mailOptions = {
-    from: 'Charley Sheets <no-reply@rcsheets.com>',
-    to: 'rcsheets@acm.org',
+    from: 'Charley Sheets <hello@rcsheets.com>',
+    to: 'rcsheets@picosecond.org',
     subject: 'Website Submission',
     text: 'You have a new submission with the following details...' +
           'Name: ' + req.body.name +
